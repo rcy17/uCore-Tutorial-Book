@@ -138,6 +138,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li class="toctree-l2 current"><a class="current reference internal" href="#">chapter4练习</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">本章任务</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">编程作业</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sys-gettimeofday">重新实现 sys_gettimeofday</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#mmap">mmap 匿名映射</a></li>
 </ul>
 </li>
@@ -243,6 +244,14 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 <div class="section" id="id2">
 <h2>编程作业<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="sys-gettimeofday">
+<h3>重新实现 sys_gettimeofday<a class="headerlink" href="#sys-gettimeofday" title="永久链接至标题">¶</a></h3>
+<p>引入虚存机制后，原来内核的 sys_gettimeofday 函数实现就无效了。请你重写这个函数，恢复其正常功能。</p>
+<p>代码中已经为你预留了函数，你需要填写 <code class="docutils literal notranslate"><span class="pre">YOUR</span> <span class="pre">CODE</span></code> 部分的代码。</p>
+<p>完成后你应该能够正确执行 ch3b_sleep* 对应的测例。通过 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span> <span class="pre">CHAPTER=4_3</span> <span class="pre">BASE=1</span></code> 来测试你的实现。</p>
+<p>tips:
+- 抄框架其他传指针的 syscall 实现。</p>
+</div>
 <div class="section" id="mmap">
 <h3>mmap 匿名映射<a class="headerlink" href="#mmap" title="永久链接至标题">¶</a></h3>
 <p>你有没有想过，当你在 C 语言中写下的 <code class="docutils literal notranslate"><span class="pre">new</span> <span class="pre">int[100];</span></code> 执行时可能会发生哪些事情？你可能已经发现，目前我们给用户程序的内存都是固定的并没有增长的能力，这些程序是不能执行 <code class="docutils literal notranslate"><span class="pre">new</span></code> 这类导致内存使用增加的操作。libc 中通过 <a class="reference external" href="https://linux.die.net/man/2/sbrk">sbrk</a> 系统调用增加进程可使用的堆空间，这也是本来的题目设计，但是一位热心的往年助教J学长表示：这一点也不酷！他推荐了另一个申请内存的系统调用。</p>
@@ -346,8 +355,8 @@ commentsRunWhenDOMLoaded(addUtterances);
 </ul>
 </div></blockquote>
 </li>
-<li><p>[选做，不占分]双页表与单页表</p>
-<p>为了防范侧信道攻击，我们的 os 使用了双页表。但是传统的设计一直是单页表的，也就是说，用户线程和对应的内核线程共用同一张页表，只不过内核对应的地址只允许在内核态访问。(备注：这里的单/双的说法仅为自创的通俗说法，并无这个名词概念，详情见 <a class="reference external" href="https://en.wikipedia.org/wiki/Kernel_page-table_isolation">KPTI</a> )</p>
+<li><p>双页表与单页表</p>
+<p>为了防范侧信道攻击，我们的 os 使用了双页表。但是传统的设计一直是单页表的，也就是说，用户线程和对应的内核线程共用同一张页表，只不过内核对应的地址只允许在内核态访问。请结合课堂知识回答如下问题：(备注：这里的单/双的说法仅为自创的通俗说法，并无这个名词概念，详情见 <a class="reference external" href="https://en.wikipedia.org/wiki/Kernel_page-table_isolation">KPTI</a> )</p>
 <ul class="simple">
 <li><p>如何更换页表？</p></li>
 <li><p>单页表情况下，如何控制用户态无法访问内核页面？（tips:看看上一题最后一问）</p></li>
@@ -361,6 +370,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <h2>报告要求<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
 <li><p>pdf 格式，CI 网站提交，注明姓名学号。</p></li>
+<li><p>注意目录要求，报告命名 <code class="docutils literal notranslate"><span class="pre">ch4.pdf</span></code>，位于 <code class="docutils literal notranslate"><span class="pre">reports</span></code> 目录下。命名错误视作没有提交。不需要删除 <code class="docutils literal notranslate"><span class="pre">ch3.pdf</span></code>。后续实验同理。</p></li>
 <li><p>完成 ch4 问答作业。</p></li>
 <li><p>[可选，不占分]你对本次实验设计及难度的看法。</p></li>
 </ul>
